@@ -36,12 +36,8 @@ def parse_multiarg_text(text: List[str]):
 
 def split_text(text: str, text_split: str):
     if text_split:
-        desired_length, max_length = map(int, text_split.split(","))
-        if desired_length > max_length:
-            raise ValueError(
-                f"--text-split: desired_length ({desired_length}) must be <= max_length ({max_length})"
-            )
-        texts = split_and_recombine_text(text, desired_length, max_length)
+        texts = text.split(";")
+        #texts = text.split("\n")
     else:
         texts = split_and_recombine_text(text)
     #
