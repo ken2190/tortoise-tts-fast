@@ -23,7 +23,7 @@ LATENT_MODES = [
 ]
 
 def generate_samples(text, voice, preset, candidates, latent_averaging_mode, sampler, steps, seed,
-                     voice_fixer, output_path, model_dir, high_vram, kv_cache, cond_free,
+                     voice_fixer, output_path, model_dir, high_vram, kv_cache, half, cond_free,
                      min_chars_to_split, produce_debug_state):
 
     conf = TortoiseConfig()
@@ -117,11 +117,11 @@ def generate_samples(text, voice, preset, candidates, latent_averaging_mode, sam
 
 
 def main(text, voice, preset, candidates, latent_averaging_mode, sampler, steps, seed,
-         voice_fixer, output_path, model_dir, high_vram, kv_cache, cond_free,
+         voice_fixer, output_path, model_dir, high_vram, kv_cache, half, cond_free,
          min_chars_to_split, produce_debug_state):
 
     results = generate_samples(text, voice, preset, candidates, latent_averaging_mode, sampler, steps, seed,
-                               voice_fixer, output_path, model_dir, high_vram, kv_cache, cond_free,
+                               voice_fixer, output_path, model_dir, high_vram, kv_cache, half, cond_free,
                                min_chars_to_split, produce_debug_state)
 
     return results
@@ -139,6 +139,7 @@ input_output_path = gr.inputs.Textbox(label="Output Path", default="results/")
 input_model_dir = gr.inputs.Textbox(label="Model Directory", default=MODELS_DIR)
 input_high_vram = gr.inputs.Checkbox(label="Low VRAM", default=True)
 input_kv_cache = gr.inputs.Checkbox(label="Key-Value Cache", default=True)
+input_half = gr.inputs.Checkbox(label="Half-Precision", default=False)
 input_cond_free = gr.inputs.Checkbox(label="Conditioning Free", default=True)
 input_min_chars_to_split = gr.inputs.Number(label="Min Chars to Split, must >= 50", default=150)
 input_produce_debug_state = gr.inputs.Checkbox(label="Produce Debug State", default=True)
@@ -148,7 +149,7 @@ output_audio = gr.outputs.Audio(label="Generated Audio", type="numpy")
 interface = gr.Interface(fn=main, inputs=[input_text, input_voice, input_preset, input_candidates,
                                           input_latent_averaging_mode, input_sampler, input_steps,
                                           input_seed, input_voice_fixer, input_output_path,
-                                          input_model_dir, input_high_vram, input_kv_cache,
+                                          input_model_dir, input_high_vram, input_kv_cache, input_half,
                                           input_cond_free, input_min_chars_to_split,
                                           input_produce_debug_state],
                          outputs=output_audio,
