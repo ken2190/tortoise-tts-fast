@@ -2,7 +2,7 @@ import re
 import argparse
 
 # Constants
-split_length = 150
+split_length = 125
 
 def split_sentences(text):
     # Split the text into sentences using regex
