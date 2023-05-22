@@ -52,7 +52,7 @@ def main():
     merged_text = re.sub(r';{2,}', ';', merged_text)
     merged_text = merged_text.replace('; ', ';')
     merged_text = merged_text.replace("’", "'")
-    #merged_text = merged_text.replace(';', '\n')
+    merged_text = merged_text.replace(';', '\n')
     
 	
 	# Remove special characters reserved in .bat files
