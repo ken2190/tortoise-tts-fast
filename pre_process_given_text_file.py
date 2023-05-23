@@ -106,6 +106,7 @@ if __name__ == "__main__":
         nlp = spacy.load("de_dep_news_trf")
     except:
         subprocess.check_call([sys.executable, '-m', 'spacy', 'download', 'de_dep_news_trf'])
+	nlp = spacy.load("de_dep_news_trf")
     # try:
     #    en = spacy.load("en_core_web_trf")
     # except:
