@@ -31,8 +31,7 @@ def pre_clean(text):
 
     return formated_text
 
-def split_text(nlp, text):
-    formated_text = pre_clean(text)
+def split_text(nlp, formated_text):
     sentences = split_sentences(formated_text)
 
     doc = nlp(formated_text)
@@ -95,7 +94,9 @@ def main():
     with open(args.input_file, 'r', encoding='utf-8') as file:
         text = file.read()
 
-    lines = split_text(nlp, text)
+    formated_text = pre_clean(text)
+	
+    lines = split_text(nlp, formated_text)
 
     merged_text = post_clean(lines)
 
