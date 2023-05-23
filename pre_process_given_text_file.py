@@ -27,16 +27,15 @@ def pre_clean(text):
     formated_text = text.replace('"', '').replace('\n', ' ')
 
     # Replace double spaces with single spaces
-    formated_text = re.sub(r'\s{2,}', ' ', text)
-
+    formated_text = re.sub(r'\s{2,}', ' ', formated_text)
 
     return formated_text
 
 def split_text(nlp, text):
-    pre_clean(text)
-    sentences = split_sentences(text)
+    formated_text = pre_clean(text)
+    sentences = split_sentences(formated_text)
 
-    doc = nlp(text)
+    doc = nlp(formated_text)
     sentences = [sent.text.strip() for sent in doc.sents]
 
     split_lines = []
