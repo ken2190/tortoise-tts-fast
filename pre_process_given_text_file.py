@@ -23,7 +23,7 @@ def find_split_point(line, words, split_length):
             return line.rindex(word, 0, split_length + 1)
     return split_length
 
-def clean_format(text):
+def pre_clean(text):
     formated_text = text.replace('"', '').replace('\n', ' ')
 
     # Replace double spaces with single spaces
@@ -33,7 +33,7 @@ def clean_format(text):
     return formated_text
 
 def split_text(nlp, text):
-    clean_format(text)
+    pre_clean(text)
     sentences = split_sentences(text)
 
     doc = nlp(text)
@@ -70,16 +70,7 @@ def split_text(nlp, text):
     return final_split_lines
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-i", "--input_file", type=str, default='speech.txt', help="Input file name")
-    args = parser.parse_args()
-
-    with open(args.input_file, 'r', encoding='utf-8') as file:
-        text = file.read()
-
-    lines = split_text(nlp, text)
-
+def post_clean(lines):
     merged_text = ';'.join(lines)
     merged_text = re.sub(r';{2,}', ';', merged_text)
     merged_text = merged_text.replace('; ', ';')
@@ -95,6 +86,20 @@ def main():
     if len(merged_text) > 7900:
         merged_text = merged_text[:7900]
 
+    return merged_text
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--input_file", type=str, default='speech.txt', help="Input file name")
+    args = parser.parse_args()
+
+    with open(args.input_file, 'r', encoding='utf-8') as file:
+        text = file.read()
+
+    lines = split_text(nlp, text)
+
+    merged_text = post_clean(lines)
+
     with open('processed_speech.txt', 'w', encoding='utf-8') as file:
         file.write(merged_text)
 
@@ -106,7 +111,7 @@ if __name__ == "__main__":
         nlp = spacy.load("de_dep_news_trf")
     except:
         subprocess.check_call([sys.executable, '-m', 'spacy', 'download', 'de_dep_news_trf'])
-	nlp = spacy.load("de_dep_news_trf")
+        nlp = spacy.load("de_dep_news_trf")
     # try:
     #    en = spacy.load("en_core_web_trf")
     # except:
