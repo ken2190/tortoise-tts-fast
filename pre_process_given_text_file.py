@@ -9,7 +9,7 @@ except ImportError:
     import spacy
 	
 # Constants
-split_length = 125
+split_length = 150
 nlp = None
 
 def split_sentences(text):
