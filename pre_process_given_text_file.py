@@ -24,7 +24,7 @@ def find_split_point(line, words, split_length):
     return split_length
 
 def pre_clean(text):
-    formated_text = text.replace('"', '').replace('\n', ' ')
+    formated_text = text.replace('"', '').replace('-', ' ').replace('\n', ' ')
 
     # Replace double spaces with single spaces
     formated_text = re.sub(r'\s{2,}', ' ', formated_text)
